@@ -3222,7 +3222,7 @@
 			};
 		};
 
-		usb@3550000 {
+		xudc@3550000 {
 			compatible = "nvidia,tegra234-xudc";
 			reg = <0x0 0x03550000 0x0 0x8000>,
 			      <0x0 0x03558000 0x0 0x8000>;
@@ -3245,7 +3245,7 @@
 			status = "disabled";
 		};
 
-		usb@3610000 {
+		xudc@3610000 {
 			compatible = "nvidia,tegra234-xusb";
 			reg = <0x0 0x03610000 0x0 0x40000>,
 			      <0x0 0x03600000 0x0 0x10000>,
