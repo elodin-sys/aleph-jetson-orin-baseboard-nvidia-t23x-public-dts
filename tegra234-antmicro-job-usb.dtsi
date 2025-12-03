@@ -107,17 +107,20 @@
 
 				/* USB-C 1 (also functions as a Jetson recovery port) */
 				usb2-0 {
-					mode = "otg";
+					// mode = "otg";
+					mode = "host";
 					status = "okay";
 					/* Delegate switching to HW (consider VBUS always on) */
 					vbus-supply = <&job_reg_5v>;
 					usb-role-switch;
 					connector {
-						compatible = "gpio-usb-b-connector", "usb-b-connector";
-						label = "micro-USB";
-						type = "micro";
+						compatible = "usb-c-connector";
+						label = "USB-C 1";
 						vbus-gpios = <&gpio TEGRA234_MAIN_GPIO(Z, 1) GPIO_ACTIVE_LOW>;
 						id-gpios = <&job_gpio_expander 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+						// compatible = "gpio-usb-b-connector", "usb-b-connector";
+						// label = "micro-USB";
+						// type = "micro";
 					};
 				};
 				usb3-2 {
@@ -139,14 +142,14 @@
 			};
 		};
 
-		/* USB Device controller */
-		tegra_xudc: xudc@3550000 {
-			status = "okay";
-			phys = <&{/bus@0/padctl@3520000/pads/usb2/lanes/usb2-0}>,
-				<&{/bus@0/padctl@3520000/pads/usb3/lanes/usb3-2}>;
-			phy-names = "usb2-0", "usb3-2";
-			nvidia,xusb-padctl = <&xusb_padctl>;
-		};
+		// /* USB Device controller */
+		// tegra_xudc: xudc@3550000 {
+		// 	status = "okay";
+		// 	phys = <&{/bus@0/padctl@3520000/pads/usb2/lanes/usb2-0}>,
+		// 		<&{/bus@0/padctl@3520000/pads/usb3/lanes/usb3-2}>;
+		// 	phy-names = "usb2-0", "usb3-2";
+		// 	nvidia,xusb-padctl = <&xusb_padctl>;
+		// };
 
 		/* USB Host controller */
 		tegra_xhci: xudc@3610000 {
