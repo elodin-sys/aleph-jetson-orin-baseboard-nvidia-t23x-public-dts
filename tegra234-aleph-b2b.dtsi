@@ -18,14 +18,13 @@
  * Device-tree overlay for tegra234-p3737-0000-p3701-0000 40-pin
  * Expansion Header.
  */
-
 #include <dt-bindings/pinctrl/pinctrl-tegra.h>
-// #include <dt-common/jetson/tegra234-p3737-0000-p3701-0000.h>
 
-&pinmux {
-		pinctrl-names = "default";
-		pinctrl-0 = <&jetson_io_pinmux>;
-		jetson_io_pinmux: exp-header-pinmux {
+&pinmux_aon {
+	pinctrl-names = "default";
+	pinctrl-0 = <&jetson_io_pinmux_aon>;
+
+	jetson_io_pinmux_aon: exp-header-pinmux {
                                 hdr40-pin8 {
                                         nvidia,pins = "uart1_tx_pr2";
                                 };
