@@ -107,7 +107,7 @@
 
 				/* USB-C 1 (also functions as a Jetson recovery port) */
 				usb2-0 {
-					mode = "peripheral";
+					mode = "host";
 					status = "okay";
 					/* Delegate switching to HW (consider VBUS always on) */
 					vbus-supply = <&job_reg_5v>;
@@ -138,23 +138,16 @@
 			};
 		};
 
-		/* USB Device controller */
-		tegra_xudc: usb@3550000 {
-			status = "okay";
-			phys = <&{/bus@0/padctl@3520000/pads/usb2/lanes/usb2-0}>,
-				<&{/bus@0/padctl@3520000/pads/usb3/lanes/usb3-2}>;
-			phy-names = "usb2-0", "usb3-2";
-			nvidia,xusb-padctl = <&xusb_padctl>;
-		};
-
 		/* USB Host controller */
 		tegra_xhci: usb@3610000 {
 			status = "okay";
-			phys = <&{/bus@0/padctl@3520000/pads/usb2/lanes/usb2-1}>,
+			phys = <&{/bus@0/padctl@3520000/pads/usb2/lanes/usb2-0}>,
+				<&{/bus@0/padctl@3520000/pads/usb2/lanes/usb2-1}>,
 				<&{/bus@0/padctl@3520000/pads/usb2/lanes/usb2-2}>,
 				<&{/bus@0/padctl@3520000/pads/usb3/lanes/usb3-0}>,
-				<&{/bus@0/padctl@3520000/pads/usb3/lanes/usb3-1}>;
-			phy-names = "usb2-1", "usb2-2", "usb3-0", "usb3-1";
+				<&{/bus@0/padctl@3520000/pads/usb3/lanes/usb3-1}>,
+				<&{/bus@0/padctl@3520000/pads/usb3/lanes/usb3-2}>;
+			phy-names = "usb2-0", "usb2-1", "usb2-2", "usb3-0", "usb3-1", "usb3-2";
 			nvidia,xusb-padctl = <&xusb_padctl>;
 		};
 	};
