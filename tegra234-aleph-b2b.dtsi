@@ -26,9 +26,8 @@
 		};
 
 		uarta: serial@3100000 { /* UART A */
-			dmas = <&gpcdma 8>, <&gpcdma 8>;
-			dma-names = "rx", "tx";
-			iommus = <&smmu_niso0 TEGRA234_SID_GPCDMA>;
+			/delete-property/ dmas;
+			/delete-property/ dma-names;
 		};
 	};
 };
@@ -101,6 +100,28 @@
 		};
 
 		// ********** UART **********
+
+		// Jetson UART1 TX (Aleph STM UART TXD)
+		// appears as uart1_tx_pr2 in nvidia config template xlsm
+		hdr40-pin8 {
+			nvidia,pins = "uart1_tx_pr2";
+			nvidia,function = "uarta";
+			nvidia,pull = <TEGRA_PIN_PULL_NONE>;
+			nvidia,tristate = <TEGRA_PIN_DISABLE>;
+			nvidia,enable-input = <TEGRA_PIN_ENABLE>;
+			nvidia,lpdr = <TEGRA_PIN_DISABLE>;
+		};
+
+		// Jetson UART1 RX (Aleph STM UART RXD)
+		// appears as uart1_rx_pr3 in nvidia config template xlsm
+		hdr40-pin10 {
+			nvidia,pins = "uart1_rx_pr3";
+			nvidia,function = "uarta";
+			nvidia,pull = <TEGRA_PIN_PULL_UP>;
+			nvidia,tristate = <TEGRA_PIN_ENABLE>;
+			nvidia,enable-input = <TEGRA_PIN_ENABLE>;
+			nvidia,lpdr = <TEGRA_PIN_DISABLE>;
+		};
 
 		// Jetson UART1 RTS (not routed from Orin SODIMM)
 		// appears as uart1_rts_pr4 in nvidia config template xlsm
