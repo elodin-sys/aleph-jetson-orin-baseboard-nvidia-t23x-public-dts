@@ -20,9 +20,37 @@
 #include "tegra234-antmicro-job.dtsi"
 #include "tegra234-aleph-b2b.dtsi"
 
+/*
+ * Aleph 4.x carrier: the GPIO expander is a TCAL9539 at 0x74 with new line
+ * assignments (0x20 is now a USB-C PD controller), and the user buttons are gone.
+ */
+/delete-node/ &job_gpio_expander;
+/delete-node/ &job_reg_csia_5v;
+/delete-node/ &job_reg_csia_3v3;
+/delete-node/ &job_reg_csib_5v;
+/delete-node/ &job_reg_csib_3v3;
+
+&gen2_i2c {
+	gpio@74 {
+		compatible = "nxp,pcal9535";
+		reg = <0x74>;
+		gpio-controller;
+		#gpio-cells = <2>;
+		gpio-line-names =
+			"FAN_EN", "FAN_FLG", "CAM0_EN", "CAM0_FLG",
+			"CAM1_EN", "CAM1_FLG", "USBC1_EN", "USBC1_FLG",
+			"FTDI_PG", "PG_5V", "PG_3V3", "PG_3V3_STBY";
+	};
+};
+
 / {
 	nvidia,dtsfilename = __FILE__;
 	nvidia,dtbbuildtime = __DATE__, __TIME__;
 	compatible = "elodin,job+p3767-0000", "nvidia,p3767-0000", "nvidia,tegra234", "nvidia,tegra23x";
 	model = "NVIDIA Orin NX SoM on Aleph";
+
+	gpio-keys {
+		/delete-node/ user_btn0;
+		/delete-node/ user_btn1;
+	};
 };
